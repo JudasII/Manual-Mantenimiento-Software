@@ -535,7 +535,7 @@ Adicionalmente, en la arquitectura monolítica son cuciales los [patrones de dis
 ## Estudios de caso
 
 - [LinkedIn](#linkedin)
-- [Instagram](#instagram)
+- [Netflix](#netflix)
 - [Figma](#figma)
 - [khan academy](#khan-academy)
 - [airbnb](#airbnb)
@@ -571,7 +571,41 @@ Adicionalmente, en la arquitectura monolítica son cuciales los [patrones de dis
   - Inversion: esta iniciativa surgió en 2011, la idea era poner en pausa el desarrollo de nuevas funcionalidades para centrar los esguerzos en mejorar las estrategias de despliegue, realizar refactoring, evaluar la productividad de desarrollo, considerar la infraestructura, entre otras actividades, que aumentan el conocimiento general del producto, incrementan la agilidad de los equipos y permiten desarrollar software de mejor calidad.
   - Superblocks: en escencia, es un grupo de servicios que realizan una serie de tareas en un solo acceso a la API del sistema. La iniciativa surgió con el llamado *call graph* o grafo de solicitudes; una solicitud simple como ver el perfil personal, requiere recolectar y organizar datos de diversos dominios que se alojan en diferentes servicios, todas estas solicitudes pueden ser complicadas de administrar y darles seguimiento. La idea es que equipos especificos se encarguen de administrar y gestionar bloques, logrando mantener los grafos de solicitudes optimizados.
 
-- ### Instagram
+- ### [Netflix](https://www.netflix.com/co-en/)
+
+  en 1997, netflix inció sus operaciones como una compañia de alquiler de DVD por correo. Incialmente la aplicación tenia una arquitectura simple: una sola base de datos centralizada y un monolito; este concepto se fue adaptando a medida que la base de usuarios crecía. Sin embargo, la base de datos presentaba un factor de riesgo, ya que también era monolitica.
+
+  cuando Netflix( streaming ) se lanzó al publico en 2007, el servicio EC2 de AWS no era lo suficientemente estable para cubrir los requerimientos de la aplicación; por lo cual la empresa decidió construir dos centros de datos propios. Sin embargo esto represento un reproceso para la empresa, ya que una vez completado el proceso de construir el centro de datos, se hacia necesario construir otro pues el primero se encontraba cerca de su limite. para evitar este ciclo, Netflix decidió realizar un escalamiento vertical para alojar su monolito.
+
+  en el año 2008, un incidente mayor de corrupción de datos hizo que la base de datos fallara y la aplicación dejó de estar disponible durante tres dias. a causa de esto, no fue posible realizar los envios durante este periodo de tiempo.
+  Este fue el detonante para tomar medidas cruciales para la organización:
+  - migrar todos los datos a AWS
+  - migrar la arquitectura a una basada en microservicios
+
+la arquitectura de Netflix, tiene tres componentes principales:
+
+- el cliente: es cualquier dispositivo desde donde se pueda buscar y acceder al contenido de la plataforma.
+- el backend: consiste en una serie de servicios corriendo sobre AWS que controlan todo lo que sucede, los servicios son accedidos por el cliente y permiten que los usuarios tengan una experiencia transparente en todas las acciones que realicen.
+- la red de entrega de contenido: este componente también conocido como (CDN) por sus siglas en ingles. se encarga de almacenar los videos y es un componente clave, pues la idea es almacenar el contenido lo más cerca a los usuarios posible.
+
+**Open Connect :** este componente ha pasado por varias iteraciones, en la actualidad consiste en una red de ubicaciones fisicas alrededor del mundo, cada ubicación es llamada punto de presencia (PoP por sus siglas en ingles), cada PoP tiene servidores, routers y equipo de red.
+
+las fases iniciales del CDN consistieron en cinco ubicaciones propias en Estados Unidos, en cada una de ellas habia una replica de todo el contenido de la plataforma; con esta infraestructura, se soportaba el servicio de streaming, con aproximadamente 35 millones de usuarios distribuidos en 50 paises.
+
+para el 2009, los costos de los CDN eran más bajos, así que para la organización era mas beneficioso usar CDN de terceros, esta decisión permitió abordar proyectos prioritarios, uno de estos proyectos fue el desarrollo de un switch para obtener datos de diferentes CDN de ser necesario, esto incrementó la calidad del servicio a los usuarios y aumentó la tolerancia a fallos.
+
+en 2012 Netlix lanzó la primera version de su propio CDN dedicado y optimizado para sus requerimientos( streaming de video ), cada CDN consiste de un grupo de servidores, conocidos como OCA (Open connect Appliances), estos servidores están optimizados para procesar archivos grandes.
+
+**Edge:** este componente es el punto más cercano al cliente y constituye el punto de entrada de diversas solicitudes al domino del servicio.
+
+en un principio, la arquitectura de netflix tenía tres capas, presentación, negocio y datos; la capa de negocio era accedida por el cliente a traves de una API, a medida que la base de usuarios creció y se agregaron mas funcionalidades, se decidió separar la aplicación monolitica y adaptarla a microservicios, sin embargo, la lógica para orquestar los microservicios se mantuvo dentro del API principal(monolito).
+
+Para abordar el requerimiento de orquestación, inicialmente se separó la aplicación en dos partes, la primera consistia en las responsabilidades del streaming mientras que la segunda se encargaba de las funcionalidades de "descubrir", en este punto, habia varios dominios administrados por varios balanceadores de carga; posteriormente, se introdujo un API Gateway,Netflix desarrolló su propia API Gateway, llamada Zuul y fue desarrollada como una herramienta de codigo abierto, para continuar separando las responsabilidades en los microservicios y reducir el acoplamiento entre el cliente y los servicios.
+
+Durante el proceso de adaptación a la nueva arquitectura de microservicios, uno de los objetivos mas importantes era hacer los microservicios altamente desacoplados y escalables; para manejar la complejidad adicional que representan los servicios independientes, se agregó una capa de unificación al API. Sin embargo al crecer la aplicación y hacerce mas complejo el dominio, escalar esta capa se hizo más complejo, la solución fue introducir un GraphQL descentralizado (federado); la idea era proveer una API unificada para los clientes y darle flexibilidad a los servicios del backend.
+
+**EVCache:** Netflix es una aplicación que requiere alta disponibilidad, para reducir la latencia y aumentar el rendimiennto de la aplicación se utiliza EVCache, la cual está adaptada a los requerimientos de la organización, es distribuida y optimizada para usarse en AWS.
+El sistema está diseñado para mantener tres copias de los datos de caché en ubicaciones diferentes de AWS, a su vez todos los clientes están conectados a todos los servidores, el cliente puede acceder a la memoria a traves de una libreria online, la cual se conecta directamente a la memoria caché con una conección TCP.
 
 - ### [Figma](https://www.figma.com/)
 
@@ -638,7 +672,20 @@ Adicionalmente, en la arquitectura monolítica son cuciales los [patrones de dis
   El objetivo final de Figma es fragmentar todas las tablas de su base de datos; esto representa una escalabilidad casi infinita.
   
 - ### khan academy
+  Khan academy inició como un simple servicio de tutorias por via telefonica, en 2004, Salman Khan recibió una llamada de un familiar que necesitaba ayuda con su tarea de mantematicas; con el tiempo comenzó a brindarle tutorías a más personas, sin embargo, no lograba atender a todos sus clientes, así que publicó sus videos en youtube. 
+  la primera versión de esta compañia, consistió en una pagina web desde la cual se reproducian videos que estaban alojados en youtube, esto debido a que el costo de almacenamiento es bajo y tiene un buen rendimiento; adicionalmente se integró un almacenamiento simple, usando Fastly CDN y S3 de AWS. Posteriormente la arquitectura se adaptaría para agregar funciones dinamicas, como el progreso de los estudiantes, mediante servicios serverles.
 
+  La iteración siguiente, fue adaptar la arquitectura monolítica, a una de microservicios, actualmente cuenta con aproximadamente 20 servicios, que se integran a traves de GraphQL y cuentan con bases de datos propias.
+
+  en este caso, la organización, delegó su proceso de escalabilidad a la infraestructura de google cloud. esto les permite concentrar sus esfuerzos en el software y las necesidades del cliente; ademas de que cuando es necesario escalar, puede hacerse con relativamente poco esfuerzo tecnico y operativo.
+
+  el stack tecnologico consiste en lo siguiente:
+  - Google cloud para gestionar su infraestructura
+  - Fastly CDN para gestionar la entrega de contenido multimedia( videos )
+  - GraphQL para integrar sus API
+  - codigo fuente en GO, inicialmente la el software estaba construido en python, sin embargo, decidieron migrar a Go, para mejorar sus tiempos de compilación y optimizar el rendimiento.
+  
+  Durante la pandemia del Covid-19, la cantidad de usuarios de khan academy aumentó mas del doble en dos semanas, en el mes de abril atendieron alrededor de treinta millones de usuarios, la simple arquitectura se mantuvo estable gracias a que la organización tenia los aliados correctos; al apalancarse de la infraestuctura de Google could, el incremento en el trafico no representó un inconvenietne, puesto que con una intervención simple, el sistema podia escalar según las necesidades del momento.
 - ### airbnb
 
 - ### reddit
