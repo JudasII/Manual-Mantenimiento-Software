@@ -269,9 +269,13 @@ los principales code smell son:
 
 existen diversas herramientas para detectar code smells:
 
-- sonarqube
-- eslint
-- aaa
+- [sonarqube](https://www.sonarsource.com/products/sonarqube/)
+- [jDeodorant](https://github.com/tsantalis/JDeodorant)
+- [infusion](https://www.intooitus.com/products/infusion/)
+- [Codebeat](https://codebeat.co/)
+- [Jetbrains Upsource](https://www.jetbrains.com/upsource/)
+- [PMD](https://pmd.github.io/)
+- [Codeclimate](https://codeclimate.com/)
 
 <mark> nota: cuando se detectan code smells es muy importante atacarlos lo antes posible.  
 
@@ -302,6 +306,39 @@ en cuanto a las técnicas, podemos destacar:
 - Reescritura del código: Reescribir el código desde cero utilizando tecnologías y frameworks modernos.
 
 ---
+### Migración
+
+---
+En ocasiones, los productos de software requieren una reestructuración completa en su ambiente de ejecución,por ejemplo, mover el software de una nube publica a una privada o viceversa, este proceso es conocido como migración, algunos ejemplos son:
+
+- Migración de arquitectura
+- Migración de sistema operativo
+- Migración a la nube
+- Migración a SAP
+
+
+existen diversos patrones para ejecutar migraciones, conocidos como Rs:
+
+- Reubicar/ realojar (rehost): esta estrategia suele ser más rapida en comparación por lo que reduce costos, la idea es mover la aplicación de un servidor fisico local( on premise ) a una maquina virtual alojada en la nube sin realizar cambios mayores al software.
+- Reingeiería: implica realizar cambios a la aplicación para adaptarse a nuevas funcionalidades, mejorar su rendimiento y escalar de manera mas eficiente, un caso común es separa una aplicación monolitica en un grupo de servicios o microservicios. 
+- cambio de plataforma( replatform ): es una combinación de la reingeniería y la reubicación, la idea es hacer cambios menores a la aplicación para que esta se adapte mejor a las nuevas condiciones, por ejemplo, convertir la aplicación en contenedores o modificarla para que soporte bases de datos en la nube.
+- retirar/ reemplazar: en ocasiones tiene sentido simplemente retirar la aplicación, las razones pueden variar e incluyen poco valor, capacidades duplicadas o limitadas o altos costos de operación.
+
+por la manera en como se contruyen las aplicaciones de software, estas están diseñadas para ser ejecutadas en sistemas operativos especificos, con arquitecturas de red, datos y nube particulares. Por lo tanto determinar una estrategia de migración implica conocer y entender cada componente de la aplicación de forma individual; algunos de los factores a considerar cuando se evaluan componentes del sistema candidatos a migración son:
+
+- complejidad
+- importancia
+- implicaciones de cumplimiento
+- disponibilidad
+- aplicación de pruebas
+
+Realizar una migración conlleva una serie de riesgos, los cuales deben ser considerados antes de tomar la decisión de migrar un sistema:
+
+- retos tecnicos: la aplicación puede tener dependencias criticas, o una gran cantidad de las dependencias, que agregan complejidad a la migración
+- costos inesperados: si la planeación no se realiza correctamente, la organización puede incurrir en costos que no se encontraban en el presupuesto planeado, como pueden ser costos de licencias o entrenamientos relacionados con las nuevas herramientas o plataformas.
+- inoperabilidad: es posible que al realizar cambios en la aplicación, esta falle o presente errores que causen tiempos de inoperabilidad inesperados.
+- diferencias culturales o de administración: dado que cada organización es diferente, cada una utiliza los productos de software de maneras diferentes, esto puede causar fricción y relentizar los procesos de migración.
+
 ---
 
 ### requerimientos
@@ -421,7 +458,33 @@ los patrones de diseño, varian según su complejidad nivel de detalle y aplicab
 
 Analogamente a los patrones de diseño, existen prácticas en el desarrollo de software, que deben evitarse, en general son patrones de diseño que en lugar de mejorar la calidad del software y ayudar a resolver algun problema, terminan teniendo el efecto opuesto. por ejemplo:
 
-- PATRONES:::::
+- **paralisis por analisis**: este antipatrón ocurre cuando las tareas de un proyecto se retrazan por demasiada planeación, analisis o discusiones.
+- **arquitectura implicada**: se presenta comunmente cuando las decisiones de diseño son ejecutadas de manera implicita en lugar de explicita, lo cual puede causar entropia en el sistema
+- **programación basada en asumsion**: de manera simplificada este antipatrón consiste en asumir que los usuarios piensan como el programador.
+- **bola de lodo**: se refiere a una arquitectura que no tiene un diseño modular, convirtiendose en una especie de masa de codigo desorganizado sin estructura.
+- **grandes diseños primero**: consiste en crear un diseño sumamente detallado del sistema antes de de iniciar su implementación, haciendo que el desarrollo sea inflexible y dificil de adaptar al cambio.
+- **ventanas rotas**: se refiere a problemas pequeños que no son corregidos, lo cual indica poco mantenimiento en el software y tiende a reducir la mantenibilidad y estabilidad del software.
+- **versionamiento por copias de carpetas**: cuando en un proyecto se realizan las actualizaciones de codigo mediante copias de la carpeta que contiene el archivo implicado
+- **programación tipo copiar pegar**: cuando un bloque de codigo cumple puede ser utilizado en otro modulo del sistema, pero en lugar de modularizarse este es copiado al siguiente componente
+- **muerte por planeación**: este patrón surge cuando un proyecto no tiene un balance entre la planeación y la ejecución del mismo, generalmente se realizan planes a muy largos plazos en el futuro.
+- **marcha de la muerte** : se refiere a un proyecto que tiene una posibilidad de exito tan minima que en terminos practicos no valdría la pena invertir recursos en el. 
+- **programación de cinta adhesiva**: se refiere a un estilo de programación donde los ingenieros son capaces de hacer que cualquier funcionalidad, libreria o herramienta, se integre y haga parte del software pero sin prestar atención al diseño, la calidad o mantenibilidad del software
+- **exposición de propiedades de colección**: esta practica se considera un antipatrón pues rompe la encapsulación y puede desembocar en un modelo de dominio anemico
+- **rapido mejor que correcto**: cuando se prefiere la velocidad sobre la calidad en un proyecto
+- **creep de la funcionalidad**: se refiere a agregar pequeñas funcionalidades extra de manera constatne, causando retrazos en los entregables y perdida del enfoque en el proyecto
+- **banderas sobre objetos**: ocurre cuando los comportamientos son escritos por fuera de los objetos mediante banderas( ej: codigos de estado), resultando en una responsabilidad poco clara y una distribución de comportamientos problematica
+- **codigo frankenstein**: consiste en que bloques de codigo o modulos completos,  que no fueron diseñados para trabajar juntos, son forzados dentro de una funcionalidad o aplicación y unidos con una especie de "cinta adhesiva" como algun patron de adaptador o una interfaz.
+- **cavernicola**: este antipatrón de desarrollo, se caracteriza por la inabilidad o negación por parte del equipo o la organización para adoptar nuevas tecnologías, metodologías o prácticas.
+- **martillo doraro**: se refiere a un lenguaje, herramienta, marco de trabajo o plataforma con la cual un ingeniero o equipo se siente comodo y productivo, por lo que intenta usarla para resolver todos los problemas que se puedan presentar. 
+- **clases iceberg**: ocurre cuando una gran una clase tiene una gran cantidad de metodos privados, lo cual puede indicar que hay comportamientos más allá del alcance de responsabilidad de dicha clase. 
+- **la trampa del 10%** : ocurre cuando las fases finales del proyecto son subestimadas, en complejidad y esfuerzo.
+- **Strings magicos** : se refiere a datos de tipo string que son especificados dentro de la aplicación e impacta el funcionamiento de la aplicación
+- **reinventar la rueda**: ocurre cuando los ingenieros, equipos o organizaciones prefieren construir herramientas para un proyecto dado por su propia cuenta, en lugar de buscar una herramienta que se encuentre disponible y permita suplir el requerimiento. 
+- **juguete brillante**: es la practica de creer que los problemas modernos pueden ser resueltos mediante las herramientas, tecnicas o librerias mas modernas. 
+- **codigo spaguetti**: se refiere a codigo que está enredado, especialmente respecto al orden en el que el programa fluye
+- **adhesion estatica**: describe un acoplamiento indeseado, causado por el acceso a una funcionalidad de manera global, bien sea en forma de variables o metodos.
+- **campo minado**: ocurre cuando se despliega una funcionalidad o una versión que no es lo suficientemente estable y los usuarios pueden incurrir en una gran cantidad de errores.
+- **caldero de bruja**: este antipatrón se caracteriza por una base de codigo caotica y poco estructurada, donde se combinan multiples tecnologías, patrones de diseño, principios de programación entre otros, de forma inconsistente y aleatoria.
 
 ## Patrones de arquitectura
 
