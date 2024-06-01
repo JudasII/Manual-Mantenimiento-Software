@@ -822,7 +822,7 @@ El sistema está diseñado para mantener tres copias de los datos de caché en u
   - control sobre la solución: al ser una herramienta internamente desarrollada, estaría hecha a la medida de los requerimientos del equipo y sus necesidades especificas.
   - posibilidad de descartar: en caso de que demasiados inconvenientes se presentaran o la solución no funcionara como debía, podian regresar a la versión anterior de la base de datos con relativa facilidad.
   
-    <p align="center">
+  <p align="center">
   <img src="./Arquitectura/Figma/Horizontal.png" />
   </p>
   algunas de las caracteristicas de la implementación de fragmentación horizontal, son:
@@ -902,7 +902,7 @@ El sistema está diseñado para mantener tres copias de los datos de caché en u
   Adicionalmente se utiliza el concepto de Bloques de servicios, apuntando a simplificar la dependencia entre los servicios y mejorar la mantenibilidad; cada bloque puede entenderse como una colección de servicios que se agrupan según la funcionalidad de negocio que cumplen.
   Cada bloque puede exponer una fachada con endpoints que permiten a los clientes leer y escribir información.
 
-- ### reddit
+- ### Reddit
 
   esta empresa fue fundada en el año 2005, su vision era ser: "la pagina principal de internet". Con el tiempo evolucionó en una red social que alberga miles de comunidades de diversos temas.
   inicialmente fue construido usando Lisp, sin embargo a finales de 2005 fue migrado a python, la razón principal de esta decision fue que Lisp no contaba con suficientes librerias estables y aceptadas, por lo general no había mas de una opción de librería cuando se incurría en una necesidad, sumado a esto, la mayoría de las librerias no tenian una documentación pertinente.
@@ -916,7 +916,7 @@ El sistema está diseñado para mantener tres copias de los datos de caché en u
   - servicios: a medida que la aplicación evolucionó, se han ido separando responsabilidades del monolito principal, para ser ubicadas en servicios independientes.
   
   <p align="center">
-  <img src="./Arquitectura/reddit/R2.png" />
+  <img src="./Arquitectura/Reddit/R2.png" />
   </p>
 
   **Monolito R2:**
@@ -944,7 +944,7 @@ El sistema está diseñado para mantener tres copias de los datos de caché en u
   Esta estrategia se sigue utilziando acutalmente y permite que Reddit realice replicas en tiempo real a varios sistemas, ademas de que los procesos son livianos, por lo tanto ya no requiere instalarse en instancias EC2.
 
   <p align="center">
-  <img src="./Arquitectura/reddit/BlueGreen.png" />
+  <img src="./Arquitectura/Reddit/BlueGreen.png" />
   </p>
 
 
@@ -963,8 +963,8 @@ El sistema está diseñado para mantener tres copias de los datos de caché en u
   - monitorear las solicitudes de lectura y solucionar las inconsistencias
   - dirigir el trafico a la nueva base de datos
   
-    <p align="center">
-  <img src="./Arquitectura/reddit/metadata.png" />
+  <p align="center">
+  <img src="./Arquitectura/Reddit/metadata.png" />
   </p>
 
 
@@ -1012,10 +1012,10 @@ El sistema está diseñado para mantener tres copias de los datos de caché en u
   | cada regla tiene su propio proceso | mediante Flink, se administra un flujo de eventos que separa los procesos |
   |las acciones ejecutadas por las reglas eran administradas por R2 | cuando se dispara una regla, envia una acción estructurada a varios temas, que son procesados por una aplicación llamada Safety Actioninig Worker |
   <p align="center">
-  <img src="./Arquitectura/reddit/REV1vsREV2.png" />
+  <img src="./Arquitectura/Reddit/REV1vsREV2.png" />
   </p>
 
-- ### "rompiste reddit:"
+- ### "rompiste Reddit:"
 
   El dia 14 de marzo de 2023, Reddit sufrió un fallo que puso a la plataforma en un estado de inoperabilidad durante aproximadamente 5 horas (314 minutos); si bien la afectación no fue total, si causó que la mayoría de los flujos no pudieran ejecutarse y solamente las partes mas modernas del sistema resistieron el fallo.
 
