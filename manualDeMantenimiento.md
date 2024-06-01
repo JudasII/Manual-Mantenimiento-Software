@@ -772,7 +772,7 @@ Durante el proceso de adaptación a la nueva arquitectura de microservicios, uno
 El sistema está diseñado para mantener tres copias de los datos de caché en ubicaciones diferentes de AWS, a su vez todos los clientes están conectados a todos los servidores, el cliente puede acceder a la memoria a traves de una libreria online, la cual se conecta directamente a la memoria caché con una conección TCP.
 
   <p align="center">
-  <img src="./Arquitectura/Netflix/EVcache.png" />
+  <img src="./Arquitectura/Netflix/EVCache.png" />
   </p>
 
 - ### [Figma](https://www.figma.com/)
