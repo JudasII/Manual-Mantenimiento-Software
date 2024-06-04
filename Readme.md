@@ -9,7 +9,7 @@ con el fin de democratizar el conocimiento, estará abierto para recibir aportes
 2. [Procesos de mantenimiento](./manualDeMantenimiento/procesosMantenimiento.md)
 3. [Modelos de mantenimiento](./manualDeMantenimiento/modelos.md)
 4. [Patrones de diseño y arquitectura](./manualDeMantenimiento/patrones.md)
-5. [Estudio de casos](./manualDeMantenimiento/casos)
+5. [Estudio de casos](./manualDeMantenimiento/casos.md)
 6. [Fuentes](./manualDeMantenimiento/fuentes.md)
 
 ## Cómo Contribuir
