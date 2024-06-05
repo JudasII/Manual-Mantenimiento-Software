@@ -1,6 +1,7 @@
 # Recomendaciones Generales
 
 independientemente del tipo de mantenimiento a realizar, hay varios factores a tener en cuenta para el desarrollo de las labores de mantenimiento.
+
 considere siempre las herramientas que tenga a la mano, aquí algunas:
 
 - Herramientas de depuración: Estas herramientas ayudan a identificar la causa de los errores en el software.
@@ -35,7 +36,7 @@ Es fundamental que el ingeniero de software comprenda a fondo los patrones de di
 - Tomar decisiones informadas sobre las modificaciones: La comprensión de la arquitectura del software permite tomar decisiones informadas sobre cómo realizar las modificaciones sin afectar negativamente el funcionamiento general de la aplicación.
 - Evitar introducir nuevos errores: Al seguir los patrones de diseño adecuados, reduce el riesgo de introducir nuevos errores en el código durante el proceso de mantenimiento.
 - Mantener la coherencia del código: Al utilizar patrones de diseño consistentes, se mantiene la coherencia del código y se facilita su comprensión y mantenimiento a largo plazo.
-notas sobre arquitectura(#arquitectura de software) y diseño(#patrones de diseño)
+notas sobre [arquitectura y diseño](./patrones.md)
 
 ## 2. Evalue el impacto
 

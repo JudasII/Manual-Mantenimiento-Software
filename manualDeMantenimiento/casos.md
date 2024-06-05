@@ -16,10 +16,9 @@
 
   en el año 2003, LinkedIn se fundó con el objetivo de mejorar las conecciones profesionales de las personas, La primera base de usuarios fue de 2700; al igual que muchos productos, la versión inicial tenia una sencilla arquitectura monolitica, que alojaba la logica de negocio, base de datos servicios web y componentes visuales, este monolito era conocido como Leo.
 
-    <p align="center">
-  <img src="./Arquitectura/LinkedIn/V1.png" />
-
-</p>
+  <p align="center">
+    <img src="./Arquitectura/LinkedIn/V1.png" />
+  </p>
 
   Para LinkedIn, las conecciones entre los usuarios son su componente principal, por lo tanto desde las fases iniciales del proyecto, se apuntó a construir un servicio para gestionar la red de conexiones entre los usuarios. En terminos generales, consistia en un grafo donde cada nodo representa un miembro y era almacenado en memoria para maximizar el rendimiento; adicionalmente tenia el requerimiento de poder ser escalable de forma independiente del monolito Leo, este nuevo servicio se nombró Cloud, y se potenció gracias a otro servicio de busqueda [apache Lucene](https://lucene.apache.org/)
 
@@ -30,7 +29,7 @@
   <img src="./Arquitectura/LinkedIn/MemberGraph.png" />
   </p>
 
-  en este punto, comienza a acumularse deuda técnica, no es recomendable ni viable escalar indefinidamente, adicionalmente mientras crece la aplicación, la mantenibilidad se verá afectada, los monolitos más grandes tardan más en desplegarse y el rendimiento de la aplicación tiende a decaer.
+  en este punto, comienza a acumularse deuda técnica, no es recomendable ni viable escalar indefinidamente un monolito, adicionalmente mientras crece la aplicación, la mantenibilidad se verá afectada, los monolitos más grandes tardan más en desplegarse y el rendimiento de la aplicación tiende a decaer.
 
   a medida que LinkedIn tenia más trafico, fallos en producción, dificultades para detectar fallos, recuperar la operabilidad y desplegar nuevas funcionalidades, sumado a un decremento en la disponibilidad; llevaron a un proceso de reingeniería en el software.
 
@@ -96,6 +95,8 @@ El sistema está diseñado para mantener tres copias de los datos de caché en u
   <p align="center">
   <img src="./Arquitectura/Netflix/EVCache.png" />
   </p>
+
+<mark>tomado de [Byte Byte Go](https://blog.bytebytego.com/p/a-brief-history-of-scaling-netflix?utm_source=post-email-title&publication_id=817132&post_id=142814811&utm_campaign=email-post-title&isFreemail=false&r=1ilv0t&triedRedirect=true&utm_medium=email) creditos al autor.</mark>
 
 - ### [Figma](https://www.figma.com/)
 
@@ -252,6 +253,9 @@ El sistema está diseñado para mantener tres copias de los datos de caché en u
   Varios subgraphs fueron agregados al monolito original, estos servicios se construyeron usando Go y conviven con los servicios originales construidos en Python. Eventualmente R2 será retirado una vez que todas sus funcionalidades se conviertan en microservicios. Es muy importante realizar esta migración de manera incremental y controlada para en caso de fallos poder regresar al monolitosin afectar la integridad y disponibilidad de la aplicación.
 
   Para ejecutar la migración, se implementó una estrategia de despliege conocida como blue/green, que consiste en darle control de la aplicación tanto al monolito como a los subgraph, luego ubicar un balanceador de cargas entre el supergraph y los subgraphs para que este redirija el trafico al componente respectivo, con esta estrategia también es posible controlar que porcentaje del trafico es administrado por el monolito o por el subgraph, lo que permite mantener la aplicación estable durante la migración.
+   <p align="center">
+  <img src="./Arquitectura/Reddit/BlueGreen.png" />
+  </p>
 
   **Replicación de datos:**
   en las fases iniciales, reddit replicaba sus datos utilizando registros de escritura por adelantado (WAL) para garantizar que si una transacción de escritura fallaba, pudiera ser restaurada a partir de los registros.
@@ -264,10 +268,6 @@ El sistema está diseñado para mantener tres copias de los datos de caché en u
   la siguiente iteración, con el fin de hacer el proceso de replicación mas estable fue usar un proceso de captura de cambios en los datos (CDC), usando Debezium y Kafka conect; el proceso consiste en que cada vez que se realice una transacción en la base de datos( agregar, modificar, borrar) Debezium detecta el evento y lo envia a un tema de kafka, posteriormente un procesador detecta el nuevo evento en el tema de kafka y replica los cambios.
   
   Esta estrategia se sigue utilziando acutalmente y permite que Reddit realice replicas en tiempo real a varios sistemas, ademas de que los procesos son livianos, por lo tanto ya no requiere instalarse en instancias EC2.
-
-  <p align="center">
-  <img src="./Arquitectura/Reddit/BlueGreen.png" />
-  </p>
 
   **Gestión de la metadata:**
   Inicialmente los datos de multimedia( fotos, videos, Gifs, contenido embebido), eran gestionados usando buckets S3 y distribuidos en varios sistemas, sin embargo no tenian un formato consistente para ser almacenados ni habia un mecanismo para auditar los cambios o analizar contenido.
@@ -334,6 +334,8 @@ El sistema está diseñado para mantener tres copias de los datos de caché en u
   <p align="center">
   <img src="./Arquitectura/Reddit/REV1vsREV2.png" />
   </p>
+
+tomado de [Byte Byte Go](https://blog.bytebytego.com/p/reddits-architecture-the-evolutionary?utm_source=post-email-title&publication_id=817132&post_id=143342954&utm_campaign=email-post-title&isFreemail=true&r=1ilv0t&triedRedirect=true)
 
 - ### "rompiste Reddit:"
 
@@ -407,7 +409,7 @@ El sistema está diseñado para mantener tres copias de los datos de caché en u
 
 - ### el fallo de roblox
 
-  El 20 de junio de 2022, Roblox sufrió un fallo que causo inoperabilidad en sus servicios durante aproximadamente 73 horas, afectando a 50 millones de jugadores.
+  El 28 de octubre de 2022, Roblox sufrió un fallo que causo inoperabilidad en sus servicios durante aproximadamente 73 horas, afectando a 50 millones de jugadores.
   la compañia posee sus propios centros de datos, servidores, infraestructura de red y hardware de computo en genera, con el fin de tener control de la escalabilidad costos y otras variables criticas para cumplir los requerimientos del software.
   
   La administración de los servidores y demás servicios de hardware, se realiza usando un stack tecnologico llamado HashiStack, que consiste en:
