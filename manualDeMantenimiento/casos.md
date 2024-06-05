@@ -335,7 +335,7 @@ El sistema está diseñado para mantener tres copias de los datos de caché en u
   <img src="./Arquitectura/Reddit/REV1vsREV2.png" />
   </p>
 
-tomado de [Byte Byte Go](https://blog.bytebytego.com/p/reddits-architecture-the-evolutionary?utm_source=post-email-title&publication_id=817132&post_id=143342954&utm_campaign=email-post-title&isFreemail=true&r=1ilv0t&triedRedirect=true)
+<mark>tomado de [Byte Byte Go](https://blog.bytebytego.com/p/reddits-architecture-the-evolutionary?utm_source=post-email-title&publication_id=817132&post_id=143342954&utm_campaign=email-post-title&isFreemail=true&r=1ilv0t&triedRedirect=true) creditos al autor. </mark>
 
 - ### "rompiste Reddit:"
 
