@@ -23,7 +23,7 @@ Gracias por su comprensión y apoyo a la comunidad de conocimiento compartido.
 1. [Recomendaciones generales](./manualDeMantenimiento/recomendacionesGenerales.md)
 2. [Procesos de mantenimiento](./manualDeMantenimiento/procesosMantenimiento.md)
 3. [Patrones de diseño y arquitectura](./manualDeMantenimiento/patrones.md)
-4. [Estudio de casos](./manualDeMantenimiento/casos)
+4. [Estudio de casos](./manualDeMantenimiento/casos.md)
 5. [Fuentes](./manualDeMantenimiento/fuentes.md)
 
 ## Cómo Contribuir
