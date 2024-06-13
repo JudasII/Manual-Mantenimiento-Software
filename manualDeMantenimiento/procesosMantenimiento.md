@@ -304,6 +304,7 @@ Así como el software tiene un ciclo de vida, el mantenimiento tiene internament
   - Las páginas web a ser desarrolladas deben cumplir con la ley de tratamiento en condiciones de igualdad para personas con discapacidad.
   - El sistema no revelará a sus operadores otros datos personales de los clientes distintos a nombres y números de referencia.
 
+## Modelos de mantenimiento
 - **Quick Fix**: Este método consiste en priorizar las soluciones más rápidas por encima de las de mayor calidad. Por lo general, implica realizar un cambio rápido y localizado para brindar una solución inmediata a los problemas del software. Sin embargo, puede generar un rápido deterioro del software, agregar deuda técnica y reducir la calidad general del sistema. Se recomienda utilizar solo en casos de emergencia y complementarlo con un análisis "post mortem" para identificar la causa raíz del problema.
 
 - **Modelo de Bohem**: Propuesto por Barry Bohem en 1983, este modelo se basa en principios de economía para mejorar el desarrollo de software. Consiste en un ciclo circular que parte de las decisiones administrativas, donde el equipo administrativo tiene la responsabilidad de alinear los objetivos de la compañía con las labores de mantenimiento del software y balancearlos con las limitaciones del proyecto.
